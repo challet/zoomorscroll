@@ -1,6 +1,6 @@
 # ZoomOrScroll
 
-Prevent map plugins from zooming while the page is being scrolled
+Prevent map plugins from zooming while the page is being scrolled.
 
 ## Getting Started
 
@@ -29,10 +29,15 @@ jQuery(function($) {
 ```
 
 ## Documentation
-_(Coming soon)_
+
+Works on browsers using **only** the (wheel event)[https://developer.mozilla.org/en-US/docs/Web/Events/wheel].
+For instance : 
+ * Firefox will throw two events : *wheel* and *DOMMouseScroll* (backward compatibility, see (here)[https://developer.mozilla.org/en-US/docs/Web/Events/wheel#The_event_order_with_legacy_mouse_scroll_events])
+ * *wheel* would be held by ZoomOrScroll
+ * *DOMMouseScroll* would reach the map and still zoom (maps APIs generally catch all of them for multi browser compatibility)
 
 ## Examples
 _(Coming soon)_
 
 ## Release History
-_(Nothing yet)_
+* 0.0.1 : POC
