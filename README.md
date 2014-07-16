@@ -16,7 +16,14 @@ In your web page:
 <script src="dist/zoomorscroll.min.js"></script>
 <script>
 jQuery(function($) {
-  $.awesome(); // "awesome"
+  $('#mapelement').zoomorscroll({
+     // the scroll events won't reach the #mapelement
+     // until one of the following condition has been reached
+     reset : {
+       no_scroll_timer: 800, // ms
+       click: true
+     }
+  }); 
 });
 </script>
 ```

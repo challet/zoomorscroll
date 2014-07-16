@@ -29,16 +29,11 @@
       // ?
     }
   };
-  
-  var initialized = false, no_scroll_timer = null;
-  
-  // Collection method.
-  $.fn.zoomorscroll = function (options) {
-    options = $.extend({}, $.zoomorscroll.options, $(this).data('zoomorscroll-options'), options);
-    $(this).data('zoomorscroll-options', options).data('zoomorscroll-holding', true);
-    $.merge($.zoomorscroll.elements, $(this));
-    $.zoomorscroll();
-    return this;
+
+  var initialized = false;
+  var no_scroll_timer = null;
+  var unhold_it = function() {
+    $(this).data('zoomorscroll-holding', false);
   };
   
   // Static method, handles the scroll events
@@ -50,23 +45,21 @@
     
     $(document).on('capture.wheel', function(event) {
       
-      if(event.eventPhase !== window.Event.CAPTURING_PHASE) {
-        return;
-      }
+      var zoomable_target = $.zoomorscroll.elements.filter(event.target); // TODO try with children
       
-      if(no_scroll_timer) {
+      // new scroll step, reset unholding conditions
+      if(no_scroll_timer) { 
         window.clearTimeout(no_scroll_timer);
       }
+      zoomable_target.off('click', unhold_it);
       
-      var zoomable_target = $.zoomorscroll.elements.filter(event.target);
       // start to check when to stop the holding
-      if(zoomable_target.length && !zoomable_target.data('zoomorscroll-undercheck')) {
-        zoomable_target.data('zoomorscroll-undercheck', true);
+      if(zoomable_target.length) {
         var target_options = zoomable_target.data('zoomorscroll-options');
-        var unhold_it = function() { zoomable_target.data('zoomorscroll-holding', false); };
-        //if(target_options.reset.no_scroll_timer) {
-        //  no_scroll_timer = window.setTimeout(unhold_it, target_options.reset.no_scroll_timer);
-        //}
+        
+        if(target_options.reset.no_scroll_timer) {
+          no_scroll_timer = window.setTimeout($.proxy( unhold_it, zoomable_target ), target_options.reset.no_scroll_timer);
+        }
         if(target_options.reset.click) {
           zoomable_target.one('click', unhold_it);
         }
@@ -78,13 +71,21 @@
       } 
       if(!zoomable_target.length) {
         // reset all holdings
-        $.zoomorscroll.elements.data('zoomorscroll-undercheck', false);
         $.zoomorscroll.elements.data('zoomorscroll-holding', true);
       }
       
     });
     
     
+  };
+
+  // Collection method.
+  $.fn.zoomorscroll = function (options) {
+    options = $.extend({}, $.zoomorscroll.options, $(this).data('zoomorscroll-options'), options);
+    $(this).data('zoomorscroll-options', options).data('zoomorscroll-holding', true);
+    $.merge($.zoomorscroll.elements, $(this));
+    $.zoomorscroll();
+    return this;
   };
 
   $.zoomorscroll.options = {

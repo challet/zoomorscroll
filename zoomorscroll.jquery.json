@@ -1,7 +1,7 @@
 {
   "name": "zoomorscroll",
   "title": "ZoomOrScroll",
-  "description": "Prevent map plugins from zooming while the page is being scrolled",
+  "description": "Prevent map plugins from zooming while the page is being scrolled (and provides conditions to actually zoom them)",
   "version": "0.0.1",
   "homepage": "git@github.com:challet/zoomorscroll.git",
   "author": {
