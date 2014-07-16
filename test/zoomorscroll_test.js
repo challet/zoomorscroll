@@ -19,7 +19,10 @@
       notStrictEqual(actual, expected, [message])
       throws(block, [expected], [message])
   */
-
+  
+  
+  /* TODO remove this and ass tests */
+  var console = console;
   $(document).ready(function() {
     // faking a zoom handler
     $('#fake_map').on('wheel', function(event) {
@@ -41,16 +44,12 @@
     }
   });
 
-  //test('is chainable', function() {
-  //  expect(1);
-  //  // Not a bad test to run on collection methods.
-  //  strictEqual(this.elems.zoomorscroll(), this.elems, 'should be chainable');
-  //});
-
-  test('stores options in the elements', function() {
-    
-    //$('#qunit-fixture').zoomorscroll();
+  test('is chainable', function() {
+    expect(1);
+    // Not a bad test to run on collection methods.
+    strictEqual(this.elems.zoomorscroll(), this.elems, 'should be chainable');
   });
+
 
 
 }(jQuery));
