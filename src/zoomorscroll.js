@@ -13,10 +13,10 @@
   // define a custom 'capture' event type (TODO make a specific plugin ?)
   $.event.special.capture = {
     noBubble: true, // used when a manual 'trigger' is fired
-    setup: function(data, namespaces, eventHandle ) {
+    setup: function() {
       return true; // no need to set up a native listener
     },
-    teardown: function(data, namespaces, eventHandle ) {
+    teardown: function() {
       return true; // no need to set up a native listener
     },
     add: function(handleObj) {
@@ -26,7 +26,7 @@
       this.removeEventListener( handleObj.namespace, handleObj.handler , true ); // use capture
     },
     handle: function() {
-      console.log('arguments');
+      // ?
     }
   };
   
@@ -50,7 +50,7 @@
     
     $(document).on('capture.wheel', function(event) {
       
-      if(event.eventPhase != Event.CAPTURING_PHASE) {
+      if(event.eventPhase !== window.Event.CAPTURING_PHASE) {
         return;
       }
       
@@ -63,9 +63,7 @@
       if(zoomable_target.length && !zoomable_target.data('zoomorscroll-undercheck')) {
         zoomable_target.data('zoomorscroll-undercheck', true);
         var target_options = zoomable_target.data('zoomorscroll-options');
-        var unhold_it = function() { 
-          zoomable_target.data('zoomorscroll-holding', false);
-        }
+        var unhold_it = function() { zoomable_target.data('zoomorscroll-holding', false); };
         //if(target_options.reset.no_scroll_timer) {
         //  no_scroll_timer = window.setTimeout(unhold_it, target_options.reset.no_scroll_timer);
         //}
@@ -81,7 +79,7 @@
       if(!zoomable_target.length) {
         // reset all holdings
         $.zoomorscroll.elements.data('zoomorscroll-undercheck', false);
-        $.zoomorscroll.elements.data('zoomorscroll-holding', true)
+        $.zoomorscroll.elements.data('zoomorscroll-holding', true);
       }
       
     });
