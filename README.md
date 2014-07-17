@@ -17,11 +17,13 @@ In your web page:
 <script>
 jQuery(function($) {
   $('#mapelement').zoomorscroll({
+     // when the scroll is applied on the #mapelement (mouse pointer over it)
      // the scroll events won't reach the #mapelement
      // until one of the following condition has been reached
+     // (scrolling outside the #mapelement will reset these conditions)
      reset : {
-       no_scroll_timer: 800, // ms
-       click: true
+       no_scroll_timer: 800, // (ms)
+       click: true // (bool)
      }
   }); 
 });
